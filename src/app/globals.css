@@ -1,0 +1,56 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #F8F6FA;
+  color: #1E2A5E;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+/* ===== 다크모드 CSS 변수 ===== */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #F8F6FA;
+  --bg-card: #ffffff;
+  --border: #EEE8F0;
+  --text-primary: #1E2A5E;
+  --text-secondary: #5A4A6A;
+  --text-tertiary: #A090A0;
+  --text-muted: #C0B0C0;
+  --navy: #1E2A5E;
+  --pink: #E8C5D8;
+  --shadow: rgba(30,42,94,0.08);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #1A1A2E;
+  --bg-secondary: #16213E;
+  --bg-card: #0F3460;
+  --border: #2A3A5E;
+  --text-primary: #E8E0F0;
+  --text-secondary: #C0B8D0;
+  --text-tertiary: #8878A0;
+  --text-muted: #60506A;
+  --navy: #4A6ADE;
+  --pink: #C0849A;
+  --shadow: rgba(0,0,0,0.3);
+}
+
+[data-theme="dark"] body {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
