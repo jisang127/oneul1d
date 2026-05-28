@@ -38,6 +38,8 @@ export function TodoModal({ mode, initialData, defaultDate, onSave, onDelete, on
   }
   const [alertTime, setAlertTime] = useState(initialData?.alertTime || '09:00')
   const [alertH, alertM] = alertTime.split(':')
+  const [rawH, setRawH] = useState(alertTime.split(':')[0])
+  const [rawM, setRawM] = useState(alertTime.split(':')[1])
   const [dueDate, setDueDate] = useState<string>(initialData?.dueDate || '')
 
   const toggleRepeatDay = (dow: number) => {
@@ -233,39 +235,45 @@ export function TodoModal({ mode, initialData, defaultDate, onSave, onDelete, on
             {alertEnabled && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={2}
-                  value={alertH}
+                  type="number"
+                  min="0"
+                  max="23"
+                  value={rawH}
                   onFocus={(e) => e.target.select()}
                   onChange={(e) => {
-                    const v = e.target.value.replace(/[^0-9]/g, '')
-                    const num = Math.min(23, parseInt(v || '0'))
+                    const v = e.target.value
+                    setRawH(v)
+                    const num = Math.min(23, Math.max(0, parseInt(v) || 0))
                     setAlertTime(`${String(num).padStart(2, '0')}:${alertM}`)
                   }}
-                  onBlur={(e) => {
-                    const num = Math.min(23, parseInt(e.target.value || '0'))
-                    setAlertTime(`${String(num).padStart(2, '0')}:${alertM}`)
+                  onBlur={() => {
+                    const num = Math.min(23, Math.max(0, parseInt(rawH) || 0))
+                    const formatted = String(num).padStart(2, '0')
+                    setRawH(formatted)
+                    setAlertTime(`${formatted}:${alertM}`)
                   }}
-                  style={{ ...inputStyle, width: '60px', textAlign: 'center', fontSize: '16px', fontWeight: 600 }}
+                  style={{ ...inputStyle, width: '64px', textAlign: 'center', fontSize: '16px', fontWeight: 600 }}
                 />
                 <span style={{ fontSize: '18px', color: '#1E2A5E', fontWeight: 500 }}>:</span>
                 <input
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={2}
-                  value={alertM}
+                  type="number"
+                  min="0"
+                  max="59"
+                  value={rawM}
                   onFocus={(e) => e.target.select()}
                   onChange={(e) => {
-                    const v = e.target.value.replace(/[^0-9]/g, '')
-                    const num = Math.min(59, parseInt(v || '0'))
+                    const v = e.target.value
+                    setRawM(v)
+                    const num = Math.min(59, Math.max(0, parseInt(v) || 0))
                     setAlertTime(`${alertH}:${String(num).padStart(2, '0')}`)
                   }}
-                  onBlur={(e) => {
-                    const num = Math.min(59, parseInt(e.target.value || '0'))
-                    setAlertTime(`${alertH}:${String(num).padStart(2, '0')}`)
+                  onBlur={() => {
+                    const num = Math.min(59, Math.max(0, parseInt(rawM) || 0))
+                    const formatted = String(num).padStart(2, '0')
+                    setRawM(formatted)
+                    setAlertTime(`${alertH}:${formatted}`)
                   }}
-                  style={{ ...inputStyle, width: '60px', textAlign: 'center', fontSize: '16px', fontWeight: 600 }}
+                  style={{ ...inputStyle, width: '64px', textAlign: 'center', fontSize: '16px', fontWeight: 600 }}
                 />
                 <span style={{ fontSize: '12px', color: '#A090A0' }}>시 / 분</span>
               </div>
