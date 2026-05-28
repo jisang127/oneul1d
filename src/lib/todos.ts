@@ -15,6 +15,9 @@ import type { Todo, Subtask } from '@/types'
 const todosCol = (userId: string) => collection(db, 'users', userId, 'todos')
 
 const matchesRepeat = (todo: Todo, date: string): boolean => {
+  // 마감일이 있으면 마감일 이후엔 반복 표시 안 함
+  if (todo.dueDate && date > todo.dueDate) return false
+
   if (todo.repeatType === 'daily') return true
   if (todo.repeatType === 'weekly') {
     const dow = new Date(date + 'T00:00:00').getDay()
@@ -43,7 +46,6 @@ export const subscribeTodos = (
       if (t.date > date) return false
       return matchesRepeat(t, date)
     })
-    // 반복 항목은 해당 날짜 done 상태를 doneDates에서 읽어서 주입
     const withDoneState = filtered.map((t) => {
       if (t.repeatType === 'none') return t
       const donedOnDate = t.doneDates?.[date] === true
@@ -76,12 +78,10 @@ export const updateTodo = (userId: string, todoId: string, data: Partial<Todo>) 
 export const deleteTodo = (userId: string, todoId: string) =>
   deleteDoc(doc(db, 'users', userId, 'todos', todoId))
 
-// 반복 항목과 일반 항목 완료 처리 분기
 export const toggleDone = (userId: string, todo: Todo, done: boolean, date: string) => {
   if (todo.repeatType === 'none') {
     return updateTodo(userId, todo.id, { done, doneAt: done ? Date.now() : null })
   }
-  // 반복 항목: doneDates에 해당 날짜만 기록
   const doneDates = { ...(todo.doneDates || {}) }
   if (done) {
     doneDates[date] = true

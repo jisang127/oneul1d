@@ -5,6 +5,7 @@ import { useTodos } from '@/hooks/useTodos'
 import { useAllTodos } from '@/hooks/useAllTodos'
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts'
 import { useServiceWorker } from '@/hooks/usePushNotification'
+import { useAlarmScheduler } from '@/hooks/useAlarmScheduler'
 import { useTheme } from '@/components/ui/ThemeProvider'
 import { addTodo, updateTodo, deleteTodo, toggleDone, togglePin, updateSortOrder, updateSubtasks } from '@/lib/todos'
 import { signOut } from '@/lib/auth'
@@ -26,6 +27,7 @@ export default function HomePage() {
   useTodos()
   useServiceWorker()
   const allTodos = useAllTodos()
+  useAlarmScheduler(allTodos)
 
   const [viewMode, setViewMode] = useState<ViewMode>('week')
   const [showAddModal, setShowAddModal] = useState(false)

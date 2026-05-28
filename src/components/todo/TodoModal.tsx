@@ -28,6 +28,14 @@ export function TodoModal({ mode, initialData, defaultDate, onSave, onDelete, on
   const [repeatDays, setRepeatDays] = useState<number[]>(initialData?.repeatDays || [])
   const [repeatDayOfMonth, setRepeatDayOfMonth] = useState<number | null>(initialData?.repeatDayOfMonth || null)
   const [alertEnabled, setAlertEnabled] = useState(initialData?.alertEnabled || false)
+
+  const handleAlertToggle = async () => {
+    if (!alertEnabled && 'Notification' in window && Notification.permission !== 'granted') {
+      const result = await Notification.requestPermission()
+      if (result !== 'granted') return
+    }
+    setAlertEnabled((v) => !v)
+  }
   const [alertTime, setAlertTime] = useState(initialData?.alertTime || '09:00')
   const [alertH, alertM] = alertTime.split(':')
   const [dueDate, setDueDate] = useState<string>(initialData?.dueDate || '')
@@ -202,7 +210,7 @@ export function TodoModal({ mode, initialData, defaultDate, onSave, onDelete, on
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <button
-                onClick={() => setAlertEnabled((v) => !v)}
+                onClick={handleAlertToggle}
                 style={{
                   width: '38px', height: '22px', borderRadius: '20px',
                   background: alertEnabled ? '#E8C5D8' : '#EEE8F0',
