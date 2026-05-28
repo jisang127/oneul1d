@@ -233,14 +233,38 @@ export function TodoModal({ mode, initialData, defaultDate, onSave, onDelete, on
             {alertEnabled && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <input
-                  type="number" min="0" max="23" value={alertH}
-                  onChange={(e) => setAlertTime(`${e.target.value.padStart(2,'0')}:${alertM}`)}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={2}
+                  value={alertH}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^0-9]/g, '')
+                    const num = Math.min(23, parseInt(v || '0'))
+                    setAlertTime(`${String(num).padStart(2, '0')}:${alertM}`)
+                  }}
+                  onBlur={(e) => {
+                    const num = Math.min(23, parseInt(e.target.value || '0'))
+                    setAlertTime(`${String(num).padStart(2, '0')}:${alertM}`)
+                  }}
                   style={{ ...inputStyle, width: '60px', textAlign: 'center', fontSize: '16px', fontWeight: 600 }}
                 />
                 <span style={{ fontSize: '18px', color: '#1E2A5E', fontWeight: 500 }}>:</span>
                 <input
-                  type="number" min="0" max="59" value={alertM}
-                  onChange={(e) => setAlertTime(`${alertH}:${e.target.value.padStart(2,'0')}`)}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={2}
+                  value={alertM}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^0-9]/g, '')
+                    const num = Math.min(59, parseInt(v || '0'))
+                    setAlertTime(`${alertH}:${String(num).padStart(2, '0')}`)
+                  }}
+                  onBlur={(e) => {
+                    const num = Math.min(59, parseInt(e.target.value || '0'))
+                    setAlertTime(`${alertH}:${String(num).padStart(2, '0')}`)
+                  }}
                   style={{ ...inputStyle, width: '60px', textAlign: 'center', fontSize: '16px', fontWeight: 600 }}
                 />
                 <span style={{ fontSize: '12px', color: '#A090A0' }}>시 / 분</span>

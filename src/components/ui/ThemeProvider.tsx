@@ -13,7 +13,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // 저장된 설정 우선, 없으면 시스템 설정 따름
-    const saved = localStorage.getItem('doto-theme') as Theme | null
+    const saved = localStorage.getItem('oneul1d-theme') as Theme | null
     if (saved) {
       setTheme(saved)
     } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -23,7 +23,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // 시스템 설정 변경 감지
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     const handler = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem('doto-theme')) {
+      if (!localStorage.getItem('oneul1d-theme')) {
         setTheme(e.matches ? 'dark' : 'light')
       }
     }
@@ -38,7 +38,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggle = () => {
     setTheme((prev) => {
       const next = prev === 'light' ? 'dark' : 'light'
-      localStorage.setItem('doto-theme', next)
+      localStorage.setItem('oneul1d-theme', next)
       return next
     })
   }

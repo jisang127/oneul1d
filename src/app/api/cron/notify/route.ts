@@ -59,7 +59,7 @@ export async function GET(req: NextRequest) {
         try {
           await webpush.default.sendNotification(
             subscription,
-            JSON.stringify({ title: 'Doto 알림 🔔', body: todo.title })
+            JSON.stringify({ title: '오늘하루 🔔', body: todo.title })
           )
           results.push(todo.title)
         } catch (e) {

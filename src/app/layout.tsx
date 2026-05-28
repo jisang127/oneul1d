@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { AuthProvider } from '@/components/auth/AuthProvider'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
+import { ToastContainer } from '@/components/ui/ToastNotification'
 
 export const metadata: Metadata = {
   title: '오늘하루',
@@ -21,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                const saved = localStorage.getItem('doto-theme');
+                const saved = localStorage.getItem('oneul1d-theme');
                 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 const theme = saved || (prefersDark ? 'dark' : 'light');
                 document.documentElement.setAttribute('data-theme', theme);
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeProvider>
           <AuthProvider>{children}</AuthProvider>
+          <ToastContainer />
         </ThemeProvider>
       </body>
     </html>
