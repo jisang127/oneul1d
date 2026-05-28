@@ -109,7 +109,7 @@ export default function HomePage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: isDark ? '#1A1A2E' : '#fff', borderBottom: `0.5px solid ${isDark ? '#2A3A5E' : '#EEE8F0'}`, flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '20px', color: isDark ? '#4A6ADE' : '#1E2A5E' }}>✓</span>
-          <span style={{ fontSize: '16px', fontWeight: 700, color: isDark ? '#E8E0F0' : '#1E2A5E' }}>Doto</span>
+          <span style={{ fontSize: '16px', fontWeight: 700, color: isDark ? '#E8E0F0' : '#1E2A5E' }}>오늘하루</span>
         </div>
         <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
           {/* 검색 */}

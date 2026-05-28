@@ -4,7 +4,7 @@ import { AuthProvider } from '@/components/auth/AuthProvider'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
 
 export const metadata: Metadata = {
-  title: 'Doto',
+  title: '오늘하루',
   description: '나만의 투두 리스트',
   manifest: '/manifest.json',
 }

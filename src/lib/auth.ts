@@ -9,11 +9,15 @@ import {
 } from 'firebase/auth'
 import { auth } from './firebase'
 
-export const signUp = (email: string, password: string) =>
-  createUserWithEmailAndPassword(auth, email, password)
+// 아이디를 내부 이메일 형식으로 변환
+const toEmail = (username: string): string =>
+  username.includes('@') ? username : `${username}@oneul1d.app`
 
-export const signIn = (email: string, password: string) =>
-  signInWithEmailAndPassword(auth, email, password)
+export const signUp = (username: string, password: string) =>
+  createUserWithEmailAndPassword(auth, toEmail(username), password)
+
+export const signIn = (username: string, password: string) =>
+  signInWithEmailAndPassword(auth, toEmail(username), password)
 
 export const signOut = () => firebaseSignOut(auth)
 

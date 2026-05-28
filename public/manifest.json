@@ -1,6 +1,6 @@
 {
-  "name": "Doto",
-  "short_name": "Doto",
+  "name": "오늘하루",
+  "short_name": "오늘하루",
   "description": "나만의 투두 리스트",
   "start_url": "/",
   "display": "standalone",
